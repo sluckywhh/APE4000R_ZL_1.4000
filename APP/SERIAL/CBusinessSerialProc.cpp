@@ -1122,19 +1122,19 @@ UINT8 CBusinessSerialProc::fpcx_Serial(CYWXML_GY &ywxml_gy, UINT8 cxfs, string c
 			DBG_PRINT(("pInvHead->m_fwm: %s", pInvHead->m_fwm.c_str()));
 			offset += SKM_SHORT_LEN;
 
-// 			memset(StrTempBuf, 0, sizeof(StrTempBuf));
-// 			memcpy(StrTempBuf, m_serialProtocol->m_rspCmd->rspData+offset, SBBH_LEN);
-// 			string strSksbbh = "";
-// 			strSksbbh.assign(StrTempBuf);
-// 			DBG_PRINT(("fpcx: sksbbh = %s", strSksbbh.c_str()));
-// 			offset += SBBH_LEN;
-
 			memset(StrTempBuf, 0, sizeof(StrTempBuf));
-			memcpy(StrTempBuf, m_serialProtocol->m_rspCmd->rspData+offset, SKDWMC_LEN);
-			string strSkdwmc = "";
-			strSkdwmc.assign(StrTempBuf);
-			DBG_PRINT(("fpcx: skdwmc = %s", strSkdwmc.c_str()));
-			offset += SKDWMC_LEN;
+			memcpy(StrTempBuf, m_serialProtocol->m_rspCmd->rspData+offset, SBBH_LEN);
+			string strSksbbh = "";
+			strSksbbh.assign(StrTempBuf);
+			DBG_PRINT(("fpcx: sksbbh = %s", strSksbbh.c_str()));
+			offset += SBBH_LEN;
+
+// 			memset(StrTempBuf, 0, sizeof(StrTempBuf));
+// 			memcpy(StrTempBuf, m_serialProtocol->m_rspCmd->rspData+offset, SKDWMC_LEN);
+// 			string strSkdwmc = "";
+// 			strSkdwmc.assign(StrTempBuf);
+// 			DBG_PRINT(("fpcx: skdwmc = %s", strSkdwmc.c_str()));
+// 			offset += SKDWMC_LEN;
 
 			memset(StrTempBuf, 0, sizeof(StrTempBuf));
 			memcpy(StrTempBuf, m_serialProtocol->m_rspCmd->rspData+offset, NSRSBH_LEN);
@@ -1462,12 +1462,13 @@ UINT8 CBusinessSerialProc::bspfpcx_Serial(CYWXML_GY &ywxml_gy,  UINT32 &InvCount
 				pInvVol[itemp].m_date = (UINT32)atoi(StrTempBuf);	//领购日期
 				DBG_PRINT(("bspfpcx[%d]: m_date = %u", itemp, pInvVol[itemp].m_date));
 				offset += DATE_LEN;
-			}
 
 			memset(StrTempBuf, 0, sizeof(StrTempBuf));
 			memcpy(StrTempBuf, m_serialProtocol->m_rspCmd->rspData+offset, RYMC_LEN);
 			string strLgry = "";
 			strLgry.assign(StrTempBuf);	//领购人员
+                offset += RYMC_LEN;
+			}
 
 			m_serialProtocol->resetAll();
 		}
@@ -2565,32 +2566,45 @@ UINT8 CBusinessSerialProc::FindErrInfo(INT8 *ErrBuf, string &strErr)
 {
 
 	DBG_PRINT(("ErrBuf =  %s", ErrBuf));
+	DBG_PRINT(("ErrBuf =  0x%x", *ErrBuf));
+	DBG_PRINT(("ErrBuf =  %d", *ErrBuf));
+	
+	UINT32 ErrLen = strlen(ErrBuf);
+	DBG_PRINT(("ErrLen =  %d", ErrLen));
+	
 
 		//-1:代表转换器返回的错误
-	if (SERCMD_HEAD_ERR == *ErrBuf)
+	if (ErrLen==1)
 	{
+		switch(*ErrBuf)
+		{
+		case SERCMD_HEAD_ERR:
 		strErr = "-1:包头数据格式错误!";
-	}
+			break;
 
-	else if (SERCMD_HEAD_PARA_ERR == *ErrBuf)
-	{
+		case SERCMD_HEAD_PARA_ERR:
 		strErr = "-1:包头数据参数错误!";
-	}
-	else if (SERCMD_CRC_ERR == *ErrBuf)
-	{
+			break;
+			
+		case SERCMD_CRC_ERR:
 		strErr = "-1:命令CRC错!";
-	}
-	else if (SERCMD_CMDNO_ERR == *ErrBuf)
-	{
+			break;
+			
+		case SERCMD_CMDNO_ERR:
 		strErr = "-1:命令号无法识别!";
+			break;
+			
+		case SERCMD_OVERTIME_ERR:
+			strErr = "-1:命令接受超时!";
+			break;
+			
+		default:
+			strErr = "无法解析转换器返回的错误";
+			break;
 	}
-	else if (SERCMD_OVERTIME_ERR == *ErrBuf)
-	{
-		strErr = "-1:命令接受超时!";
 	}
 	else
 	{
 		strErr = ErrBuf;
-	}
-		
+	}		
 }

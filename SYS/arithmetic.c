@@ -281,12 +281,15 @@ INT32 AmountRound(double *f)
 
 	//对小数位数做四舍五入处理
     dotnum = ((i - dot) > 0)?(i - dot):0;
+	DBG_PRN("info",("--------dotnum= %d--------", dotnum));
+		DBG_PRN("info",("--------littleNum= %d--------", littleNum));
 	if (dotnum > MAX_DOT_NUM && littleNum == 0)
 	{
 		(*f) += 5.0/pow(10, MAX_DOT_NUM+1);
 		sprintf(buf, "%.10lf", *f);
 		dotnum = MAX_DOT_NUM;
 	}
+	DBG_PRN("info",("--------dotnum= %d--------", dotnum));
 		//小数位数截断处理，dotnum = 0时需要把小数点去掉
 	if (dotnum != 0)
 	{
@@ -297,10 +300,14 @@ INT32 AmountRound(double *f)
 		buf[dot+dotnum] = '\0';
 	}
 
+		DBG_PRN("info",("--------buf= %s--------", buf))
 	//在整数部分大于1时，判断默认保留MAX_DOT_NUM位小数或更少情况下，
 	//数量是否超过最大值
 	*f = atof(buf);	
+	DBG_PRN("info",("--------*f= %f--------", *f));
 	f2int = (UINT64)((*f)*(pow(10, dotnum)));
+	DBG_PRN("info",("--------f2int= %lld--------", f2int));
+	DBG_PRN("info",("--------dotnum= %d--------", dotnum));
 	if (dotnum <= MAX_DOT_NUM && f2int > MAX_AMOUNT_VALUE)
 		return -1;
 

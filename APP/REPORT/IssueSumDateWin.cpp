@@ -50,7 +50,7 @@ int CIssueSumDateWin::Create(int iX,int iY,int iW,int iH)
 	CaWindow::Create(iX,iY,iW,iH); // creat a window
 	
 	//创建一个Input  第一行
-	strcpy(title, "输入起始日期:");
+	strcpy(title, "起始日期:");
 	titleLen = strlen(title) * CHAR_W;
 	curH = SCREEN_TOP_OFFSET;
 	m_pInput1=new CaInput(CaObject::ON_LEFT,titleLen);
@@ -60,8 +60,8 @@ int CIssueSumDateWin::Create(int iX,int iY,int iW,int iH)
 	m_pInput1->m_InputType = m_pInput1->aINT; //该输入框只接受字符
 	m_pInput1->OnObject = S_OnInput1;
 	
-	//创建一个Input  第一行
-	strcpy(title, "输入起始时间:");
+	//创建一个Input  第二行
+	strcpy(title, "起始时间:");
 	titleLen = strlen(title) * CHAR_W;
 	curH += LINE_H;
 	m_pInput2=new CaInput(CaObject::ON_LEFT,titleLen);
@@ -71,8 +71,8 @@ int CIssueSumDateWin::Create(int iX,int iY,int iW,int iH)
 	m_pInput2->m_InputType = m_pInput2->aINT; //该输入框只接受字符
 	m_pInput2->OnObject = S_OnInput2;
 	
-	//创建一个Input  第一行
-	strcpy(title, "输入截止日期:");
+	//创建一个Input  第三行
+	strcpy(title, "截止日期:");
 	titleLen = strlen(title) * CHAR_W;
 	curH += LINE_H;
 	m_pInput3=new CaInput(CaObject::ON_LEFT,titleLen);
@@ -82,8 +82,8 @@ int CIssueSumDateWin::Create(int iX,int iY,int iW,int iH)
 	m_pInput3->m_InputType = m_pInput3->aINT; //该输入框只接受字符
 	m_pInput3->OnObject = S_OnInput3;
 
-	//创建一个Input  第一行
-	strcpy(title, "输入截止时间:");
+	//创建一个Input  第四行
+	strcpy(title, "截止时间:");
 	titleLen = strlen(title) * CHAR_W;
 	curH += LINE_H;
 	m_pInput4=new CaInput(CaObject::ON_LEFT,titleLen);
@@ -130,7 +130,7 @@ int CIssueSumDateWin::ProcEvent(int iEvent,unsigned char *pEventData, int iDataL
 	switch(iEvent)
 	{	   
 	case RETURN_MAIN_MENU:  //return to SYSTEMMENU
-			ChangeWin(COMMERCE_REPORT_MENU);			
+			ChangeWin(FISCAL_REPORT_MENU);			
 			return SUCCESS;
 		  break;		
 	default: break;		
@@ -272,7 +272,7 @@ void CIssueSumDateWin::OnButton1(int iEvent, unsigned char * pEventData, int iDa
 		retCode = PrnIssueSumProc();
 		if (SUCCESS == retCode) 
 		{
-			ChangeWin(COMMERCE_REPORT_MENU);	 //返回税控信息界面	
+			ChangeWin(FISCAL_REPORT_MENU);	 //返回税控信息界面	
 		}
 	}	
 }
@@ -280,7 +280,7 @@ void CIssueSumDateWin::OnButton1(int iEvent, unsigned char * pEventData, int iDa
 
 void CIssueSumDateWin::OnButton2(int iEvent, unsigned char * pEventData, int iDataLen)
 {
-	ChangeWin(COMMERCE_REPORT_MENU);	 //返回税控信息界面		
+	ChangeWin(FISCAL_REPORT_MENU);	 //返回税控信息界面		
 }
 
 

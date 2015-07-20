@@ -241,7 +241,7 @@ UINT8 CMonthSaleSumWIn::CheckInput(void)
 	m_StartDate = atoi(content1);
 	m_EndDate = m_StartDate;
 
-	unsigned int year, month, day;
+	UINT32 year, month, day;
 	year = m_StartDate/100;
 	month = m_StartDate%100;
 	day = 1;
@@ -257,6 +257,12 @@ UINT8 CMonthSaleSumWIn::CheckInput(void)
 	month = (nCurDate%10000)/100;
 	day = nCurDate%100;
 	nCurDate = year*100+month;
+
+	if (1970 == year)
+	{
+		CaMsgBox::ShowMsg("当前日期为1970,请修改");
+		return FAILURE;
+	}
 	if (m_StartDate>nCurDate) 
 	{
 		m_pInput1->SetFocus();

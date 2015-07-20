@@ -25,7 +25,7 @@ CTimeSumInfoWin::CTimeSumInfoWin():CaWindow()
 	m_EndDate = 0;
 	m_StartTime = 0;		
 	m_EndTime = 0;	
-	m_create = 0;
+	//m_create = 0;
 	
 	m_pSegSumPrnData = &m_segSumPrnData;
 }
@@ -41,7 +41,7 @@ int CTimeSumInfoWin::Create(int iX,int iY,int iW,int iH)
 	int curH;
 	char title[OBJ_TITLE_MAX_LEN + 1];
     int titleLen=0;
-	m_create = 1;
+//	m_create = 1;
 	
     m_iBtnW = (SCREEN_W/2 - 0) ; //控件的宽度
 	m_iColW = m_iBtnW + 0;        //控件的列宽
@@ -176,11 +176,11 @@ void CTimeSumInfoWin::DoActive()
 {
 	DBG_PRINT((" CTimeSumInfoWin::DoActive()!"));
 	
-	if(m_create == 1)
-	{
-		m_create = 0;
-		return;
-	}
+// 	if(m_create == 1)
+// 	{
+// 		m_create = 0;
+// 		return;
+// 	}
 	
 	m_pDateWin = (CTimeSumDateWin*)m_pFrame->GetWin(TIME_SUM_DATE_WIN);
 	m_StartDate = m_pDateWin->m_StartDate;

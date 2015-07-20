@@ -653,8 +653,7 @@ UINT8 CProductSaleMainMenu::NormalShow()
 	string strErr;
 	UINT8 ret = SUCCESS;
 	INT32 nCurrentInvNo  = 0;
-	UINT8 uFlag =0;
-	
+
 	//当前发票号
 	if (g_globalArg->m_operator->m_role==DEMO_ROLE) 
 	{
@@ -669,28 +668,16 @@ UINT8 CProductSaleMainMenu::NormalShow()
 		 			DBG_PRINT(("strErr= %s",strErr.c_str()));
 		 			if (ret ==FAILURE)
 		 			{
-		 				uFlag=1;
 		 				sprintf(title_array[1], strErr.c_str()); //错误
 		 			} 	
-		 		}
-		if (0 == uFlag)
-		{
-			
-			sprintf(title_array[1], "%s  %08u", 
-				g_globalArg->m_curInvVol->m_code.c_str(), g_globalArg->m_curInvVol->m_curInvNo);
-		}
-		
+		 		}		
 	}
 	
 	DBG_PRINT((" g_globalArg->m_curInvVol->m_ieno = %u !", g_globalArg->m_curInvVol->m_ieno));
 	DBG_PRINT((" g_globalArg->m_curInvVol->m_remain = %u !", g_globalArg->m_curInvVol->m_remain));
 	
 	//第一行
-	if( 0 == g_globalArg->m_curInvVol->m_curInvNo) 
-	 	{
- 		sprintf(title_array[1], "当前发票号: 已无发票，请购买！");		
-	 	}
-		else
+	if( 0 != g_globalArg->m_curInvVol->m_curInvNo) 
 		{
 		sprintf(title_array[1], "当前发票号: %08d", g_globalArg->m_curInvVol->m_curInvNo);
 	 	}

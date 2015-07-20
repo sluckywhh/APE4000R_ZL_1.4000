@@ -17,7 +17,6 @@ struct TYWPwOffData *g_YW_PowerOffData = &YW_PowerOffData;  /**< µôµç±£»¤½á¹¹ÌåÖ
 
 void pw_handler(int x)
 {
-#if (LANGCHAO_LIB==0)
 	bool ret;
 	FILE * fp;
 
@@ -61,12 +60,10 @@ void pw_handler(int x)
 
 	DBG_PRINT(("pw_headler end"));
 	exit(0);
-#endif
 }
 
 void PowOff_init()
 {
-#if (LANGCHAO_LIB==0)
 	FILE *fp;
 	int flag=0;
 	printf("PowOff_init start \n");
@@ -103,13 +100,10 @@ void PowOff_init()
 	
 	POWOFF_ENABLE();
 
-#endif	
 }
 
 void PowOff_release()
 {
-#if (LANGCHAO_LIB==0)
 	powOff_release_drv();
-#endif
 }
 

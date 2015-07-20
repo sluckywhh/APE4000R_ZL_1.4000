@@ -23,7 +23,11 @@ CSelfTestMenu::CSelfTestMenu()
 {
 	ifLightOn = 1;
 	int i;
+#if (POS_TYPE == POS_APE5020R)
+	m_iNumOfBtn = 14;
+#else
 	m_iNumOfBtn = 15;
+#endif
 	for(i = 0; i < m_iNumOfBtn; i++)
 	{
 		m_pBtn[i] = NULL;
@@ -81,7 +85,7 @@ int CSelfTestMenu::Create(int iX,int iY,int iW,int iH)
 	m_pBtn[5]->SetTitle(title, strlen(title));
 	m_pBtn[5]->OnObject = S_OnButton5;
 
-	strcpy(title, "COM2自检(G)");
+        	strcpy(title, "打印参数(G)");
 	m_pBtn[6]->SetTitle(title, strlen(title));
 	m_pBtn[6]->OnObject = S_OnButton6;
 
@@ -113,10 +117,12 @@ int CSelfTestMenu::Create(int iX,int iY,int iW,int iH)
 	m_pBtn[13]->SetTitle(title, strlen(title));
 	m_pBtn[13]->OnObject = S_OnButton13;
 	
- 
-	strcpy(title, "打印参数(9)");
+#if (POS_TYPE != POS_APE5020R)
+	strcpy(title, "COM2自检(9)");
 	m_pBtn[14]->SetTitle(title, strlen(title));
 	m_pBtn[14]->OnObject = S_OnButton14;
+#endif
+
 
 
 
@@ -208,13 +214,13 @@ void CSelfTestMenu::S_OnButton13(CaObject *obj,int iEvent, unsigned char * pEven
 	CSelfTestMenu *win=(CSelfTestMenu *)obj->GetdWin();
 	win->OnButton13(iEvent,pEventData,iDataLen);
 }
-
+#if (POS_TYPE != POS_APE5020R)
  void CSelfTestMenu::S_OnButton14(CaObject *obj,int iEvent, unsigned char * pEventData, int iDataLen)
 {
 	CSelfTestMenu *win=(CSelfTestMenu *)obj->GetdWin();
 	win->OnButton14(iEvent,pEventData,iDataLen);
 }
-
+#endif
 
 void CSelfTestMenu::OnButton0(int iEvent, unsigned char * pEventData, int iDataLen)
 {
@@ -270,12 +276,13 @@ void CSelfTestMenu::OnButton5(int iEvent, unsigned char * pEventData, int iDataL
 	this->ReFresh();
 }
 
-void CSelfTestMenu::OnButton6(int iEvent, unsigned char * pEventData, int iDataLen)
+#if (POS_TYPE != POS_APE5020R)
+void CSelfTestMenu::OnButton14(int iEvent, unsigned char * pEventData, int iDataLen)
 {
 	COM2Event(1);
 	this->ReFresh();
 }
-
+#endif
 
 void CSelfTestMenu::OnButton7(int iEvent, unsigned char * pEventData, int iDataLen)
 {
@@ -343,7 +350,7 @@ void CSelfTestMenu::OnButton13(int iEvent, unsigned char * pEventData, int iData
 	return;
 }
 
-void CSelfTestMenu::OnButton14(int iEvent, unsigned char * pEventData, int iDataLen)
+void CSelfTestMenu::OnButton6(int iEvent, unsigned char * pEventData, int iDataLen)
 {
 //	string strErr = "是否调整打印参数？";
 	string strErr = "是否放入白纸打印？";	

@@ -227,16 +227,26 @@ int ReadPort(int fd, unsigned char* byte, int length, int *rCount)
 #ifndef WIN32	
 	int res = 0;
 
+	if (GetReceiveCount_proc(fd) >0)
+	{
 	res = read(fd, byte, length);
 	*rCount = res;
-	if (res == 0)
+		return SUCCESS;
+	}else
 	{
 		return FAILURE;
 	}
-	else
-	{
-		return SUCCESS;
-	}
+	
+// 	res = read(fd, byte, length);
+// 	*rCount = res;
+// 	if (res == 0)
+// 	{
+// 		return FAILURE;
+// 	}
+// 	else
+// 	{
+// 		return SUCCESS;
+// 	}
 
 #else
 	//	memcpy(byte, testbuf, length);

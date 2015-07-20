@@ -150,7 +150,7 @@ private:
 	@param[in] iDataLen 事件内容长度
 	*/
 	void OnButton13(int iEvent, unsigned char * pEventData, int iDataLen); 
-
+#if (POS_TYPE != POS_APE5020R)
 	/*!
 	@brief 按钮响应函数	
 	@param[in] iEvent 事件编号
@@ -158,7 +158,7 @@ private:
 	@param[in] iDataLen 事件内容长度
 	*/
 	void OnButton14(int iEvent, unsigned char * pEventData, int iDataLen); 
-
+#endif
 	/*!
 	@brief 按钮响应的静态函数
 	@param[in] obj 控件指针
@@ -285,6 +285,7 @@ private:
 	*/
 	static void S_OnButton13(CaObject *obj,int iEvent, unsigned char * pEventData, int iDataLen);
 
+#if (POS_TYPE != POS_APE5020R)
 	/*!
 	@brief 按钮响应的静态函数
 	@param[in] obj 控件指针
@@ -293,7 +294,7 @@ private:
 	@param[in] iDataLen 事件内容长度
 	*/
 	static void S_OnButton14(CaObject *obj,int iEvent, unsigned char * pEventData, int iDataLen);
-
+#endif
 //	inline void Adjustm_iH(int h)
 //	{
 //		// m_pBtnList->m_iH += h ; 

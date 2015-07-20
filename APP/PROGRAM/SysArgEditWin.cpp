@@ -18,6 +18,10 @@
 
 #include "APIBase.h"
 
+#if TYPE_MODE == ZHQ_MODE
+#include "SerialProtocol.h"
+#endif
+
 #include "PrintDriver.h"
 #include "printer.h"
 
@@ -308,8 +312,10 @@ void CSysArgEditWin::OnButton1(int iEvent, unsigned char * pEventData, int iData
 		{
 			g_globalArg->m_com2BaudRate = m_sysArg->m_vInt;
 		
+			SerialProtocol* m_serialProtocol;
+			m_serialProtocol = SerialProtocol::getInstance();
 			INT8 ret = 0;
-			ret = g_globalArg->m_serialProtocol->ReleasePort();
+			ret = m_serialProtocol->ReleasePort();
 			if (SUCCESS != ret)
 			{
 				CaMsgBox::ShowMsg("串口关闭失败, 请重启!");
@@ -317,15 +323,12 @@ void CSysArgEditWin::OnButton1(int iEvent, unsigned char * pEventData, int iData
 				while(1);
 				//return ;
 			}
-			ret = g_globalArg->m_serialProtocol->InitPort(UART_DEV_NAME, g_globalArg->m_com2BaudRate);
+			ret = m_serialProtocol->InitPort(UART_DEV_NAME, g_globalArg->m_com2BaudRate);
 			DBG_PRINT(("ret = %d", ret));
 			if (ret != SUCCESS)
 			{
-				CaMsgBox::ShowMsg("重新打开串口失败, 请重启!");	
-				
+				CaMsgBox::ShowMsg("重新打开串口失败, 请重启!");				
 				while(1);
-				
-			//	return ;
 			}
 
 		}

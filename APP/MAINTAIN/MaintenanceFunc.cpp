@@ -439,6 +439,37 @@ UINT8 USBEvent(UINT8 IfForward)
 	return SUCCESS;
 }
 
+#if (POS_TYPE == POS_APE5020R)
+UINT8 USBEvent2(UINT8 IfForward)
+{
+	LCDClearDisplay();//ÇåÆÁ
+	CaProgressBar proBar("");
+	if (USBTest2()==SUCCESS)
+	{
+		DBG_PRINT(("USB self test success"));
+		proBar.SetText("USB×´Ì¬£ºÕý³£");		
+		PrintStr("USB×´Ì¬£ºÕý³£");
+	}
+	else
+	{
+		DBG_PRINT(("USB self test fail"));
+		proBar.SetText("USB×´Ì¬£ºÒì³£");	
+		PrintStr("USB×´Ì¬£ºÒì³£");
+	}
+	proBar.ReFresh();
+	
+	if (IfForward == 1)
+	{
+		ForwardNLine(FORWARD_LINE_NUM);
+	}
+	
+#ifndef WIN32
+	usleep(600000);
+#endif
+	
+	return SUCCESS;
+}
+#endif
 //IC Card
 // UINT8 ICCardEvent(UINT8 IfForward)
 // {
@@ -573,10 +604,11 @@ UINT8 ContinuousTestEvent(void)
 //	DBG_PRINT(("------------COM0 check------------"));
 //	COM0Event(IfForward);
 	
+#if (POS_TYPE != POS_APE5020R)	
 	// ´®¿Ú2×Ô»·¼ì²â
 	DBG_PRINT(("------------COM3 check------------"));
 	COM2Event(IfForward);
-	
+#endif	
 	// Ç®Ïä¼ì²â
 	DBG_PRINT(("------------Money Box check------------"));
 	BoxEvent(IfForward);

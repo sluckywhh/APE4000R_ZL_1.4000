@@ -7,8 +7,8 @@
 #define CORP_NAME_LEN					200		//企业名称长度
 #define PAYER_NAME_LEN					200		//付款单位名称长度
 #else
-#define CORP_NAME_LEN					70		
-#define PAYER_NAME_LEN					64		
+#define CORP_NAME_LEN					80		
+#define PAYER_NAME_LEN					80		
 #endif
 
 #define TAX_ID_NUM						6		//税种税目总数
@@ -162,12 +162,30 @@
 
 //机器编码下载 相关
 #define PRODUCT_TYPE		0		/**< 1：机器类型只有1位  0：机器类型为2位*/
+
 #if PRODUCT_TYPE == 1
 #define PRODUCT_TYPE_CODE                0x20       /**< 机器类型*/
 #else
+
+#if (POS_TYPE == POS_APE3000R)
+#define PRODUCT_TYPE_CODE_BYTE1          0x00       /**< 机器类型 字节1*/
+#define PRODUCT_TYPE_CODE_BYTE2          0x07       /**< 机器类型 字节2*/
+
+#elif (POS_TYPE == POS_APE4000R)
+#define PRODUCT_TYPE_CODE_BYTE1          0x00       /**< 机器类型 字节1*/
+#define PRODUCT_TYPE_CODE_BYTE2          0x09       /**< 机器类型 字节2*/
+
+#elif (POS_TYPE == POS_APE4020R)
 #define PRODUCT_TYPE_CODE_BYTE1                0x02       /**< 机器类型 字节1*/
 #define PRODUCT_TYPE_CODE_BYTE2          0x00       /**< 机器类型 字节2*/
+
+#elif (POS_TYPE == POS_APE5020R)
+#define PRODUCT_TYPE_CODE_BYTE1          0x02       /**< 机器类型 字节1*/
+#define PRODUCT_TYPE_CODE_BYTE2          0x01       /**< 机器类型 字节2*/
+
 #endif
+#endif
+
 #define MACHINE_S_VER                    "0.0"       /**< 机器类型*/
 
 //MAC地址下载 相关 by yy 20120524
@@ -190,19 +208,11 @@
 #define DEFAULTE_VOL_NUM        100           /**< 每卷默认发票张数（字符串形式，便于控件显示）*/
 
 
-//---重庆国税后台专用----//
-#define MAX_MESSAGE_NUM			10    /**< 显示通知消息的条数 */
 
 //ProgressBar定义
-#if (LANGCHAO_LIB == 0)
 #define	BAR_DEF()			CaProgressBar info("")
 #define	BAR_SHOW(x)			{info.SetText(x);info.Show();}
-#else
-#define	BAR_DEF()
-#define	BAR_SHOW(x)
-#endif
 
-//---重庆国税后台专用----//
 
 
 #define ISSUE_TYPE  0 /**< 0 = 简单版的自动开票，1 = 15所容量测试的自动开票*/

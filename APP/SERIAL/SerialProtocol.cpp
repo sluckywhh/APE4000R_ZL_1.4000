@@ -279,7 +279,7 @@ UINT8 SerialProtocol::revData(string &strErr)
 			}
 			else if((m_rspCmd->head[0]=='E' && m_rspCmd->head[1]=='R'))
 			{
-				DBG_PRINT(("get ER reponse"));
+				DBG_PRINT(("get ER reponse packageLen-headLen = %u", packageLen-headLen));
 				memcpy(m_rspCmd->rspData, m_revBuf+headLen, packageLen-headLen);
 				m_rspCmd->rspData[packageLen-headLen] = 0x00;
 				break;
@@ -319,7 +319,7 @@ UINT8 SerialProtocol::Rev_Pack(string &strErr)
 		}
 		else
 		{
-			CommonSleep(50);
+			CommonSleep(100);
 			times++;
 		}
 	}
@@ -345,7 +345,7 @@ UINT8 SerialProtocol::Rev_Pack(string &strErr)
 		}
 		else
 		{
-			CommonSleep(10);
+			CommonSleep(TIME_MS);
 			times++;
 		}
 	}
@@ -371,7 +371,7 @@ UINT8 SerialProtocol::Rev_Pack(string &strErr)
 		}
 		else 
 		{
-			CommonSleep(10);
+			CommonSleep(TIME_MS);
 			times++;
 		}
 	}

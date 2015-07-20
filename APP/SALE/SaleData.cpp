@@ -295,7 +295,11 @@ UINT8 SaleData::Sale( CDept *deptInfo )
 	//如果用户没输入总价
 	else
 	{
+		DBG_PRINT(("deptInfo->m_spdj==%lf ", deptInfo->m_spdj));
+		DBG_PRINT(("m_tmpAmount==%lf ", m_tmpAmount));
+
 		orgMoneySum = double2int(deptInfo->m_spdj * 1000.0 * m_tmpAmount * SUM_EXTENSION);//原始总金额
+		DBG_PRINT(("orgMoneySum == %lld", orgMoneySum));
 		orgMoneySum = double2int(orgMoneySum / 1000.0);
 		DBG_PRINT(("orgMoneySum == %lld", orgMoneySum));
 	}
@@ -984,7 +988,6 @@ UINT8 SaleData::MakeInvoiceHandle(UINT8 nIfPrn, UINT8 nId)
 			//填充发票打印结构体，打印
 			//------------------------------------------------------------
 		case PRINT_INV:  		
-#if (LANGCHAO_LIB==0)
 			DBG_PRINT(("填充发票打印结构体，打印"));
 			if( nIfPrn == 1 )
 			{
@@ -1022,7 +1025,6 @@ UINT8 SaleData::MakeInvoiceHandle(UINT8 nIfPrn, UINT8 nId)
 				print_invoice_tail(m_pInvPrnData);
 				m_pInvPrnData = NULL;
 			}
-#endif
 			
 		default:
 			break;
@@ -1297,7 +1299,7 @@ UINT8 SaleData::ComposePrnInv()
 	
 	if(RET_MANUAL_INV == m_smallInvInfo->m_kplx)
 	{
-		sprintf(value, "原正票代码:%s,号码:%08lu",
+		sprintf(value, "对应正数发票代码:%s号码:%08lu",
 			m_smallInvInfo->m_yfpdm.c_str(), m_smallInvInfo->m_yfphm);	
 		m_smallInvInfo->m_backup1 = value;	
 	}
@@ -2621,18 +2623,14 @@ INT64 SaleData::CountTax(double fJe, double fSl)
 	fTmp =fSl;
     fTmp += 1.0;
 	DBG_PRINT(("fTmp= %.4f",fTmp));
-
 	
 	fTmp  = fJe / fTmp;
-
 	DBG_PRINT(("fTmp= %.4f",fTmp));
 	
 	fTmp *= fSl;
     DBG_PRINT(("fTmp= %.4f",fTmp));
-	
-	
+		
     nSe =double2int(fTmp*PRICE_EXTENSION);
-
 	DBG_PRINT(("nSe= %u",nSe));
 	
 	return nSe;

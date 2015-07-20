@@ -20,6 +20,17 @@
 //#define NO_POS_DEBUG
 #include "pos_debug.h"
 
+#define USB_DIR "/mnt"
+#define USB_DIR2 "/mnt1"
+
+#if (POS_TYPE == POS_APE5020R)
+#define UART_NO		UART3
+#define UART_DIR	UART3_DEV_NAME
+#else
+#define UART_NO		UART2
+#define UART_DIR	UART2_DEV_NAME
+#endif
+
 UINT8 g_buf[400];
 
 //CPU◊‘ºÏ
@@ -292,7 +303,6 @@ UINT8 KeyboardTest(void)
 	return SUCCESS;		
 }
 
-//USB
 UINT8 USBTest(void)
 {
 	UINT8 ret = SUCCESS;
@@ -305,6 +315,17 @@ UINT8 USBTest(void)
 //	strCmd = "mount -t vfat /dev/sdb1 ";
 //	strCmd.append(USB_DIR);
 //	system(strCmd.c_str());
+
+#if (POS_TYPE == POS_APE5020R)
+	ret = UsbDiskMount2(NULL);
+	if (SUCCESS != ret)
+	{
+		DBG_PRINT(("π“‘ÿU≈Ã1∫Õ2 ß∞‹ ret = %u", ret));
+		//		CaMsgBox::ShowMsg("π“‘ÿU≈Ã ß∞‹");
+		UsbDiskUnMount2();
+		return FAILURE;
+	}
+#else
 	ret = UsbDiskMount(NULL);
 	if (SUCCESS != ret)
 	{
@@ -313,8 +334,7 @@ UINT8 USBTest(void)
 		UsbDiskUnMount();
 		return FAILURE;
 	}
-
-	
+#endif	
 	strCmd = USB_DIR;
 	strCmd.append("/yu");
 	if ((fp = fopen(strCmd.c_str(), "w")) == NULL)
@@ -323,13 +343,24 @@ UINT8 USBTest(void)
 	}
 	fclose(fp);
 
+#if (POS_TYPE == POS_APE5020R)
+	
+	strCmd = USB_DIR2;
+	strCmd.append("/yan");
+	if ((fp = fopen(strCmd.c_str(), "w")) == NULL)
+	{
+		ret = FAILURE;
+	}
+	fclose(fp);
+      UsbDiskUnMount2();
+#else
+    UsbDiskUnMount();
+#endif	
 	//–∂U≈Ã∑÷«¯
 //	system("umount -t vfat /dev/sdb1");
-	UsbDiskUnMount();
+	
 	return ret;	
 }
-
-//ICø®
 //UINT8 ICCardTest(void)
 //{
 //	DBG_PRINT(("ICCardTest(void)"));

@@ -13,6 +13,7 @@
 #include "SaleBusinessFunc.h"
 #include "DeclareBusinessFunc.h"
 
+#define  TJXXCX_MONTHMAX 6
 
 CAPIskjProc::CAPIskjProc()
 {
@@ -292,7 +293,7 @@ INT32  CAPIskjProc::TJXXCXPro_API(CYWXML_GY &ywxml_gy, CTjxxhz *pTjxxhz, string 
 	INT32 ret = SUCCESS;
 
 	CInvBusinessFunc invBusFun;
-	INT32 monthcount = 12;
+	INT32 monthcount = TJXXCX_MONTHMAX;
 	DBG_PRINT(("ywxml_gy.m_fplxdm : %s", ywxml_gy.m_fplxdm.c_str()));
 
 	ret= invBusFun.TJXXCXPro(ywxml_gy, monthcount, pTjxxhz, strErr);
