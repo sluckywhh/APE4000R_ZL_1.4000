@@ -641,7 +641,7 @@ UINT8 FSC_ChangeDiskPsw(string strOldPsw, string strNewPsw,string &strErr)
 
 		return FAILURE;
 	}
-
+	
 	memset((void*)chValue, 0 ,sizeof(chValue));
 	sprintf(chValue, "UPDATE SYSARG SET V_TEXT = '%s' where SA_ID = %d", strNewPsw.c_str(), SYS_DISK_PSW);
 	sysArg.SetSQL(chValue);

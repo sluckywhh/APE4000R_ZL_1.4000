@@ -48,7 +48,7 @@ void CFiscalReportMenu::OnButton3(int iEvent, unsigned char * pEventData, int iD
 
 void CFiscalReportMenu::OnButton4(int iEvent, unsigned char * pEventData, int iDataLen)
 {
-		
+
 	ChangeWin(MONTH_SALE_SUM_WIN);
 }
 

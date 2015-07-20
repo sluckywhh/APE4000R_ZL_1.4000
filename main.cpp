@@ -129,7 +129,7 @@ int main()
 	}//必须放在掉电恢复之前
 
 	DBG_PRINT(("g_globalArg->InitGlobalArg() begin"));
-	g_globalArg->InitGlobalArg();
+	g_globalArg->InitGlobalArg(); 
 	DBG_PRINT(("g_globalArg->InitGlobalArg() over"));
 
 	string strErr("");
@@ -164,7 +164,13 @@ int main()
 //#if (ON_LINE==0)
 
 		DBG_PRINT(("已初始化，启动次线程前"));
-		pthread_create(&threadWrt, NULL, NetCommunicate, NULL);
+		pthread_attr_t threadAttr;
+		pthread_attr_init(&threadAttr);
+		
+		size_t defaultStackSize=0;
+		pthread_attr_getstacksize(&threadAttr,&defaultStackSize);		
+		pthread_attr_setstacksize(&threadAttr,1024*1024);		
+		pthread_create(&threadWrt, &threadAttr, NetCommunicate, NULL);
 		DBG_PRINT(("已初始化，启动次线程后"));
 //#endif
 //	}

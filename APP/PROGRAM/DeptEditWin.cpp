@@ -325,7 +325,7 @@ UINT8 CDeptEditWin::CheckInputValid(string &strErr)
 		return FAILURE;
 	}
 	double dPrice = atof((char *)(m_pInput3->m_contentBuf));
-	//if (((UINT64)(PRICE_EXTENSION * dPrice)) > MAX_MONEY ) 
+// 	if (((UINT64)(PRICE_EXTENSION * dPrice)) > MAX_MONEY ) 
 		if (((UINT64)(double2int(dPrice))) > MAX_MONEY_A )
 	{
 		DBG_PRINT(("dPrice = %f",  dPrice));

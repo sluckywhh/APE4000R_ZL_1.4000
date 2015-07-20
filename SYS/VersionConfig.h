@@ -6,7 +6,7 @@
 //  软件版本定义
 //////////////////////////////////////////////////////////////////////////
 
-#define SOFTWARE_VERSION		1.400020		//软件版本号(对应debug版本号：1.110013)
+#define SOFTWARE_VERSION		1.300006		//软件版本号(对应debug版本号：1.110013)
 
 #define RELEASE_VER				0  /**< 1: 发布版本，0: 测试版本 */
 
@@ -20,15 +20,8 @@
 #define 	POS_APE5020R  4
 
 
-#define 	POS_TYPE	POS_APE4000R     //款机类型
+#define 	POS_TYPE		POS_APE4000R
 
-#if (POS_TYPE == POS_APE4020R)
-#define UART				UART2
-#define UART_DEV_NAME		UART2_DEV_NAME
-#else
-#define UART				UART3
-#define UART_DEV_NAME		UART3_DEV_NAME
-#endif
 
 #define	KEYPAD_TYPE				1	/**< 键盘硬件版本，1: 新版键盘（shift与部类5对调，T9输入法键位调整），0: 老版键盘 */
 
@@ -44,6 +37,7 @@
 #define	CORP_NAME_LEN_TPYE		0	/**< 纳税户名称长度类型 1: 200字节，0: 40字节 */
 #define ON_LINE                 0   /**< 1:纯在线开票模式   0：允许离线开票模式 */    
 
+#define LANGCHAO_LIB			0   /**< 0: 重庆国税航信版本, 1: 重庆国税浪潮中间件版本*/
 
 
 #define PRN_ADDR_TEL            1   /**< 1: 支持打印收款单位地址和电话 0: 不支持*/

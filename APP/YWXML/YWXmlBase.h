@@ -12,6 +12,9 @@
 #define KJ_XML_REQUEST_FILE		"KJXmlReqFile.xml"
 #define KJ_XML_RESPONSE_FILE	"KJXmlRspFile.xml"
 
+#define KJ_XML_INV_REQUEST_FILE		"KJXmlInvReqFile.xml"
+#define KJ_XML_INV_RESPONSE_FILE	"KJXmlInvRspFile.xml"
+
 
 #define MAX_SEND_BUF_LEN		1024*5
 
@@ -93,9 +96,6 @@ protected:
 	CReturnInfo m_retInfo;
 	string m_ywlx;
 
-	string m_servip;
-	string m_servport;
-	string m_servpath;
 	string m_pin;
 	string m_Err;
 	string m_nsrsbh;

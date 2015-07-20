@@ -11,6 +11,10 @@
 #include "SysMacDef.h"
 #include "CaMsgBox.h"
 
+#define UART_NO 2
+#define UART_DIR "/dev/uart2"
+#define USB_DIR "/mnt"
+
 
 /*!
 @brief CPU×Ô¼ì	

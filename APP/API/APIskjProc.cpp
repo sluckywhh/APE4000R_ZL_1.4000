@@ -442,35 +442,35 @@ INT32  CAPIskjProc::InvoiceUpload_API(CYWXML_GY &ywxml_gy, string &strErr)
 {
 	INT32 ret = SUCCESS;
 
-	CSaleBusinessFunc  saleBusFun;
-	do 
-	{
-	ret= saleBusFun.InvoiceUpload(ywxml_gy, strErr);
-	} while(ret == SUCCESS);
-	
+// 	CSaleBusinessFunc  saleBusFun;
+// 	do 
+// 	{
+// 		ret= saleBusFun.InvoiceUpload(ywxml_gy, strErr);
+// 	} while(ret == SUCCESS);
+
 // 	ret= saleBusFun.InvoiceUpload(ywxml_gy, strErr);
 // 	
 // 	if (ret !=SUCCESS)
 // 	{
 // 		return FAILURE;
 // 	}
-// 	g_globalArg->m_pthreadNsrsbh = ywxml_gy.m_nsrsbh;
-// 	g_globalArg->m_pthreadSksbbh = ywxml_gy.m_sksbbh;
-// 	g_globalArg->m_pthreadSksbkl = ywxml_gy.m_sksbkl;
-// 	g_globalArg->m_pthreadFplxdm = ywxml_gy.m_fplxdm;
-// 	g_globalArg->m_pthreadJqbh = ywxml_gy.m_jqbh;
-// 	g_globalArg->m_pthreadKpjh = ywxml_gy.m_kpjh;
-// 	g_globalArg->m_pthreadZskl = ywxml_gy.m_zskl;
-// 	
-// 	if(	g_globalArg->m_pthreadFlag == 0)
-// 	{
-// 		g_globalArg->m_pthreadFlag = 1;
-// 	}
-// 	else
-// 	{
-// 		g_globalArg->m_pthreadFlag = 0;
-// 	}
-// 	DBG_PRINT(("g_globalArg->m_pthreadFlag = %u", g_globalArg->m_pthreadFlag));
+	g_globalArg->m_pthreadNsrsbh = ywxml_gy.m_nsrsbh;
+	g_globalArg->m_pthreadSksbbh = ywxml_gy.m_sksbbh;
+	g_globalArg->m_pthreadSksbkl = ywxml_gy.m_sksbkl;
+	g_globalArg->m_pthreadFplxdm = ywxml_gy.m_fplxdm;
+	g_globalArg->m_pthreadJqbh = ywxml_gy.m_jqbh;
+	g_globalArg->m_pthreadKpjh = ywxml_gy.m_kpjh;
+	g_globalArg->m_pthreadZskl = ywxml_gy.m_zskl;
+
+	if(	g_globalArg->m_pthreadFlag == 0)
+	{
+		g_globalArg->m_pthreadFlag = 1;
+	}
+	else
+	{
+		g_globalArg->m_pthreadFlag = 0;
+	}
+	DBG_PRINT(("g_globalArg->m_pthreadFlag = %u", g_globalArg->m_pthreadFlag));
 
 	return ret;
 }

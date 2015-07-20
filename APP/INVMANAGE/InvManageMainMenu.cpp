@@ -91,6 +91,12 @@ void CInvManageMenu::OnButton2(int iEvent, unsigned char * pEventData, int iData
 		CaMsgBox::ShowMsg( "机器未初始化");
 		return ;
 	}
+
+	if(g_globalArg->m_corpInfo->m_Kpjhm != 0)
+	{
+		CaMsgBox::ShowMsg("分机不能网络购票!");
+		return;
+	}
 	
 	string strErr("");
 	UINT8 ret=SUCCESS;

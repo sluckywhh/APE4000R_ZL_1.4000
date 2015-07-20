@@ -117,7 +117,7 @@ INT32 CInvBusinessFunc::WLLQFPPro(CYWXML_GY &ywxml_gy, CInvVol *pInvVol, string 
 			return FAILURE;
 		}
 		
-	ret = g_pBusBase->WLLQFP_Business(ywxml_gy, pInvVol, sksbxx, strErr);
+		ret = g_pBusBase->WLLQFP_Business(ywxml_gy, pInvVol, sksbxx, strErr);
 		ret = g_pBusBase->ErrParse(ret, strErr);
 		if(ret != SUCCESS)
 		{
@@ -125,11 +125,11 @@ INT32 CInvBusinessFunc::WLLQFPPro(CYWXML_GY &ywxml_gy, CInvVol *pInvVol, string 
 		}
 		
 		ret = g_pBusBase->GPXXXP_Business(ywxml_gy, pInvVol->m_fpjmw, strErr);
-	ret = g_pBusBase->ErrParse(ret, strErr);
-	if(ret != SUCCESS)
-	{
-		return FAILURE;
-	}
+		ret = g_pBusBase->ErrParse(ret, strErr);
+		if(ret != SUCCESS)
+		{
+			return FAILURE;
+		}
 
 		CommonSleep(1000);
 		

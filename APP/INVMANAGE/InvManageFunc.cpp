@@ -184,8 +184,8 @@ UINT8 INVM_CheckIsNoDB(string invCode,UINT32 invNo,CInvHead *pInvHead)
 	{
 		if (errorcode == SQLITE_DONE)
 		{
-		return NO_INV; 	
-	}
+			return NO_INV; 	
+		}
 		else
 		{
 			return QUERY_ERROR; 
@@ -676,13 +676,23 @@ UINT8 INVM_InvDetailNOQuery(string invCode,UINT32 invNO)
 {		
 	INT32 Ret=SUCCESS;
 	string strErr("");
-	string strsql("");
-
-	INT32 ret=0;
-
-	CaProgressBar proBar("发票信息查询中.....");
-    proBar.ReFresh();
 	
+	//查看本地是否有该发票信息
+	CInvHead invheadtmp;
+	INT8 sqlbuf[256];
+	memset(sqlbuf, 0x00, sizeof(sqlbuf));
+	sprintf(sqlbuf, "where FPDM = '%s' and FPHM = %u", invCode.c_str(), invNO);
+	invheadtmp.m_filter = sqlbuf;
+	invheadtmp.Requery();
+	if (invheadtmp.LoadOneRecord() == SQLITE_OK)
+	{
+		DBG_PRINT(("本地已有该发票!"));
+		return SUCCESS;
+	}
+
+	CaProgressBar proBar("发票明细查询中.....");
+    proBar.ReFresh();
+
 	//发票明细查询
 	CInvHead Invhead;
 	UINT32 invNum=0;//发票张数
@@ -697,80 +707,19 @@ UINT8 INVM_InvDetailNOQuery(string invCode,UINT32 invNO)
 	DBG_PRINT(("cxtj= %s",cxtj.c_str()));
 
 	Ret=g_pAPIBase->GetInvHeadInfo_API(*g_YwXmlArg, cxfs, cxtj, invNum, &Invhead, strErr);
-	DBG_PRINT(("Ret= %d",Ret));
 	if (Ret !=SUCCESS)
 	{
 		CaMsgBox::ShowMsg(strErr);
 		return FAILURE;
 	}
 
-	//查看本地是否有该发票信息
-	CInvHead invheadtmp;
-	INT8 sqlbuf[128];
-	memset(sqlbuf, 0x00, sizeof(sqlbuf));
-	sprintf(sqlbuf, "where FPDM = '%s' and FPHM = %u", invCode.c_str(), invNO);
-	invheadtmp.m_filter = sqlbuf;
-	invheadtmp.Requery();
-	if (invheadtmp.LoadOneRecord() == SQLITE_OK)
+	//发票信息保存
+	if (SUCCESS != Invhead.Save())
 	{
-		// 		DBG_PRINT(("本地已有该发票!"));
-		//CaMsgBox::ShowMsg("本地已有该发票!");
-	   //	return FAILURE; 
-      //判断本地数据库的数据类型是否与转换器一致
-		DBG_PRINT(("invheadtmp.m_kplx= %u",invheadtmp.m_kplx));
-	    DBG_PRINT(("Invhead.m_kplx= %u",Invhead.m_kplx));
-      if (invheadtmp.m_kplx != Invhead.m_kplx )
-      {
-		  strsql = sqlbuf;
-		  invheadtmp.m_kplx = Invhead.m_kplx;
-		  ret = invheadtmp.Update(strsql, &(invheadtmp.m_kplx), NULL);
-		  DBG_PRINT(("ret= %d",ret));
-		  if ( ret!= SQLITE_OK)
-		  {
-			  strErr = "更新发票头信息表错误";
-			  return FAILURE;
-		  }
-
-		  //更新INV_DET发票类型
-		  CInvDet invDet;
-		  invDet.m_kplx =invheadtmp.m_kplx;
-		  ret = invDet.Update(strsql, &(invDet.m_kplx), NULL);
-		  DBG_PRINT(("ret= %d",ret));
-		  if ( ret!= SQLITE_OK)
-		  {
-			  strErr = "更新发票明细信息表错误";
-			  return FAILURE;
-		  }
-
-      }
-
+		CaMsgBox::ShowMsg("所查询发票存储失败!");
+		return FAILURE; 
 	}
-	else
-	{
-		//发票信息保存
-		if (SUCCESS != Invhead.Save())
-		{
-			CaMsgBox::ShowMsg("查询发票存储失败!");
-			return FAILURE; 
-		}
-		DBG_PRINT(("Invhead.m_kplx= %u",Invhead.m_kplx));
-		if(Invhead.m_kplx == RETURN_INV)
-		{
-			CRtInv rtInv;
-		     rtInv.m_fpdm =Invhead.m_yfpdm;
-			 rtInv.m_fphm =Invhead.m_yfphm;
-			 ret = rtInv.AddNew();				//写已退发票信息表
-			 DBG_PRINT(("ret= %d",ret));
-			 if ( ret!= SQLITE_OK)
-			 {
-				 strErr = "查询红票，存储蓝票信息表错误";
-				 return FAILURE;
-		  }
-		
-	}
-	}
-
-	CaMsgBox::ShowMsg("查询发票成功");
+	CaMsgBox::ShowMsg("所查询发票存储成功");
 
 	return SUCCESS;
 }

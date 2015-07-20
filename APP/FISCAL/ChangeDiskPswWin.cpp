@@ -211,7 +211,7 @@ void CChangeDiskPswWin::OnButton1(int iEvent, unsigned char * pEventData, int iD
     ret= FSC_ChangeDiskPsw(m_OldPsw, m_NewPsw,strErr);
 	if (ret != SUCCESS)
 	{
-		CaMsgBox::ShowMsg(strErr);
+			CaMsgBox::ShowMsg(strErr);
 		return;
 	}
 

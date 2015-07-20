@@ -214,7 +214,6 @@ UINT8 INV_InvoiceUpload(string &strErr)
 	INT32 Ret=SUCCESS;
 	
 	DBG_PRINT(("g_YwXmlArg->m_fplxdm : %s", g_YwXmlArg->m_fplxdm.c_str()));
-	
 	Ret =g_pAPIBase->InvoiceUpload_API(*g_YwXmlArg, strErr);
 	
 	if ( Ret !=SUCCESS)

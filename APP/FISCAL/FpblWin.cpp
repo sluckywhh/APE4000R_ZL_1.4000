@@ -195,7 +195,7 @@ void CFpblWin::OnButton1(int iEvent, unsigned char * pEventData, int iDataLen)
 	proBar.Show();
 
 	DBG_PRINT(("传入报税起始日期 = %u", m_StartDate));
-	DBG_PRINT(("传入报税终止日期 = %u",m_EndDate));
+	DBG_PRINT(("传入报税终止日期 = %u", m_EndDate));
 
 	ret = FSC_FpblProc(m_StartDate, m_EndDate, strErr);
 

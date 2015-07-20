@@ -77,9 +77,7 @@ enum ByteOrder
 #define ER_PACKAGE_TYPE				0x03
 #define WT_PACKAGE_TYPE				0x04
 
-#define WAIT_TIME					300				//串口等待时间 秒
-#define REV_TIME					100		
-
-#define TIME_MS						30			
+#define WAIT_TIME					600				//串口等待时间 秒
+#define REV_TIME					300				
 
 #endif

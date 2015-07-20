@@ -125,7 +125,6 @@
 #include "InitEditWin.h"
 #include "ChangeDiskPswWin.h"
 #include "FpblWin.h"
-#include "HqlxsjWin.h"
 
 CMainFrame::~CMainFrame(){}
 CMainFrame::CMainFrame(){}
@@ -863,6 +862,12 @@ CaWindow *CMainFrame::CreateWin(int id)
 			pWin->Create(0,0,SCREEN_W, SCREEN_H);
 		}
 		break;
+	case FPBL_WIN:
+		{
+			pWin = new CFpblWin;
+			pWin->Create(0,0,SCREEN_W, SCREEN_H);
+		}
+		break;
 
 #if TYPE_MODE == ZHQ_MODE
 	case ZHQ_PARA_SET_MENU:
@@ -899,18 +904,6 @@ CaWindow *CMainFrame::CreateWin(int id)
 		break;
 #endif
 
-	case FPBL_WIN:
-		{
-			pWin = new CFpblWin;
-			pWin->Create(0,0,SCREEN_W, SCREEN_H);
-		}
-		break;
-	case HQLXSJ_WIN:
-		{
-			pWin = new CHqlxsjWin;
-			pWin->Create(0,0,SCREEN_W, SCREEN_H);
-		}
-		break;
 
 //////////////////////////////////////////////////////////////////////////
 // 网络相关的窗口(结束)

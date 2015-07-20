@@ -257,7 +257,7 @@ public:
 	@return  1 SUCCESS； 0  FAILURE
 	*/
 	INT32 UpdateTaxProc_API(CYWXML_GY &ywxml_gy, string &strErr);
-
+	
 	/*!
 	@brief  发票补录
 	@param[in] ywxml_gy	公共参数

@@ -47,8 +47,8 @@ public:
 
     string m_pzCode;		/**< 发票种类代码 */
 	UINT8  m_fplx;			/**< 发票类型 */
-	string m_bsqsrq;		/**< 数据报送起始日期YYYYMMDDHHMMSS */
-	string m_bszzrq;		/**< 数据报送终止日期 YYYYMMDDHHMMSS*/
+	string m_bsqsrq;	/**< 数据报送起始日期YYYYMMDDHHMMSS */
+	string m_bszzrq;	/**< 数据报送终止日期 YYYYMMDDHHMMSS*/
 
 };
 

@@ -184,7 +184,7 @@ void CLoginWin::OnButton1(int iEvent, unsigned char * pEventData, int iDataLen)
 	CaProgressBar proBar("");
 //	CDownLoadInvVolFun cDownloadInvProc;
 	string tmp_str("");
-	//	INT32 nSize = MAX_MESSAGE_NUM;
+		INT32 nSize = MAX_MESSAGE_NUM;
 	
 	if (CheckInputValid(strErr) == FAILURE) 
 	{

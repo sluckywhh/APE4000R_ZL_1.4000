@@ -28,7 +28,7 @@ UINT8 SALE_GetCurInv(CInvVol *pInvVol,string &strErr)
 	INT32 ret=SUCCESS;
 
 	ret=g_pAPIBase->GetCurInvInfo_API(*g_YwXmlArg, pInvVol, strErr);
-
+	
 	if (ret !=SUCCESS)
 	{
 		return FAILURE;
@@ -464,6 +464,7 @@ UINT8 CheckIfFull(INT32 nInvHeadNum, INT32 nInvSumNum)
 
 UINT8 ForwardPaper(void)
 {
+#if (LANGCHAO_LIB==0)
 	DBG_ENTER("SaleData::ForwardPaper");
 	if (isPaper() != 0)
 	{
@@ -482,24 +483,26 @@ UINT8 ForwardPaper(void)
 	{
 		ForwardNPoint(5);
 	}
-
+#endif
 	DBG_RETURN(SUCCESS);
 }
 
 UINT8 BackwardPaper(void)
 {
+#if (LANGCHAO_LIB==0)
 	DBG_ENTER("SaleData::BackwardPaper");
 	if (isPaper() != 0)
 	{
 		DBG_RETURN(FAILURE);
 	}
 	BackwardNPoint(10);
-
+#endif
 	DBG_RETURN(SUCCESS);
 }
 
 UINT8 NoMarkForwardPaper(void)
 {
+#if (LANGCHAO_LIB==0)
 	DBG_ENTER("SaleData::NoMarkForwardPaper");
 	if (isPaper() != 0)
 	{
@@ -508,6 +511,7 @@ UINT8 NoMarkForwardPaper(void)
 	
     ForwardNLine(2);
 	
+#endif
 	DBG_RETURN(SUCCESS);
 }
 
@@ -560,37 +564,38 @@ UINT8 GetServNum(UINT32 &uNum,string &strErr)
 #ifndef WIN32
 void * NetCommunicate(void *arg)
 {
-// 	CSaleBusinessFunc saleFunc;
-// 	CYWXML_GY ywXml_Gy;
-// 	INT32 ret = SUCCESS;
-// 	string strErr;
-// 	UINT32 nTime = 10000;
-// 	
-// 	while(1)
-// 	{
-// 		if( (g_globalArg->m_pthreadFlag == 1) )
-// 		{
-// 		ywXml_Gy.m_nsrsbh = g_globalArg->m_pthreadNsrsbh;
-// 		ywXml_Gy.m_sksbbh = g_globalArg->m_pthreadSksbbh;
-// 		ywXml_Gy.m_sksbkl = g_globalArg->m_pthreadSksbkl;
-// 		ywXml_Gy.m_fplxdm = g_globalArg->m_pthreadFplxdm;
-// 		ywXml_Gy.m_jqbh = g_globalArg->m_pthreadJqbh;
-// 		ywXml_Gy.m_kpjh = g_globalArg->m_pthreadKpjh;
-//			ywXml_Gy.m_zskl = g_globalArg->m_pthreadZskl;
-// 			ret = saleFunc.InvoiceUpload(ywXml_Gy, strErr);
-// 			if (SUCCESS != ret)
-// 			{
-// 				DBG_PRINT(("strErr = %s", strErr.c_str()));
-// 				g_globalArg->m_pthreadFlag = 0;
-// 				g_globalArg->m_pthreadErr = strErr;
-// 				CommonSleep(nTime);
-// 			}
-// 		}
-// 		else
-// 		{
-// 			CommonSleep(nTime);
-// 		}
-// 	}
+	CSaleBusinessFunc saleFunc;
+	CYWXML_GY ywXml_Gy;
+	INT32 ret = SUCCESS;
+	string strErr;
+	UINT32 nTime = 10000;
+	
+	while(1)
+	{
+		if( (g_globalArg->m_pthreadFlag == 1) )
+		{
+			ywXml_Gy.m_nsrsbh = g_globalArg->m_pthreadNsrsbh;
+			ywXml_Gy.m_sksbbh = g_globalArg->m_pthreadSksbbh;
+			ywXml_Gy.m_sksbkl = g_globalArg->m_pthreadSksbkl;
+			ywXml_Gy.m_fplxdm = g_globalArg->m_pthreadFplxdm;
+			ywXml_Gy.m_jqbh = g_globalArg->m_pthreadJqbh;
+			ywXml_Gy.m_kpjh = g_globalArg->m_pthreadKpjh;
+			ywXml_Gy.m_zskl = g_globalArg->m_pthreadZskl;
+
+			ret = saleFunc.InvoiceUpload(ywXml_Gy, strErr);
+			if (SUCCESS != ret)
+			{
+				DBG_PRINT(("strErr = %s", strErr.c_str()));
+				g_globalArg->m_pthreadFlag = 0;
+				g_globalArg->m_pthreadErr = strErr;
+				CommonSleep(nTime);
+			}
+		}
+		else
+		{
+			CommonSleep(nTime);
+		}
+	}
 }
 
 UINT8 UploadInvProc()

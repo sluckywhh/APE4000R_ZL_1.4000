@@ -221,6 +221,7 @@ public:
 	string m_pthreadSksbkl;
 	string m_pthreadFplxdm;
 	string m_pthreadKpjh;
+	string m_pthreadZskl;
 
 
 private:

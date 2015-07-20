@@ -32,7 +32,7 @@ int CProgramCtrlMenu::Create(int iX,int iY,int iW,int iH)
     
 	CMultiBtnCommonWin::Adjustm_iH(1);
 	CMultiBtnCommonWin::Create(iX, iY, iW, iH);
-
+	
 	SetTitle(1,  "A.商品管理");
 	SetTitle(2,  "B.开票员管理");
 	SetTitle(3,  "C.客户管理");
@@ -77,11 +77,11 @@ void CProgramCtrlMenu::OnButton3(int iEvent, unsigned char * pEventData, int iDa
 void CProgramCtrlMenu::OnButton4(int iEvent, unsigned char * pEventData, int iDataLen)
 {
 	// 参数编程不对未初始化限制
-// 	if (g_globalArg->m_initFlag == 0)
-// 	{
-// 		CaMsgBox::ShowMsg("机器未初始化");
-// 		return ;
-// 	}
+	// 	if (g_globalArg->m_initFlag == 0)
+	// 	{
+	// 		CaMsgBox::ShowMsg("机器未初始化");
+	// 		return ;
+	// 	}
 	m_pFrame->GetWin(SYS_ARG_EDIT_WIN);
 	ChangeWin(SYSTEM_ARG_MENU);
 }
@@ -102,14 +102,14 @@ void CProgramCtrlMenu::OnButton6(int iEvent, unsigned char * pEventData, int iDa
 
 //软件升级
 void CProgramCtrlMenu::OnButton7(int iEvent, unsigned char * pEventData, int iDataLen)
-{	
+{
 	ChangeWin(SYSTEM_UPGRADE_WIN);	
 }
 
 
 //修改密码
 void CProgramCtrlMenu::OnButton8(int iEvent, unsigned char * pEventData, int iDataLen)
-	{
+{
 	ChangeWin(PASSWD_EDIT_WIN);	
 }
 

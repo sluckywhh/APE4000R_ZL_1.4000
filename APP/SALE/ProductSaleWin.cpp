@@ -1113,7 +1113,7 @@ UINT8 CProductSaleWin::PriceInputProc(void)
  		CaMsgBox::ShowMsg("金额超过最大允许值");
 	 	return FAILURE;
 	}
- 		dotNum = CheckFloatBit(ii);
+	dotNum = CheckFloatBit(ii);
 	if (dotNum>3) 
 	{
 		DBG_PRINT(("--------ii = %f--------", ii));

@@ -261,7 +261,7 @@ UINT8 CClearDepotWin::ClearDepot(string &strInfo)
 	//add
 	INT8 sqlbuf[128];
 	memset((void *)sqlbuf,0x00,sizeof(sqlbuf));
-
+	
 	sprintf(sqlbuf,  "where SA_ID = %d", SYS_BIDIRECTION_PRINT);
 	sysArg->m_filter.append(sqlbuf);
 	sysArg->Requery();

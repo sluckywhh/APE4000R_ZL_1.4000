@@ -295,11 +295,7 @@ UINT8 SaleData::Sale( CDept *deptInfo )
 	//如果用户没输入总价
 	else
 	{
-		DBG_PRINT(("deptInfo->m_spdj==%lf ", deptInfo->m_spdj));
-		DBG_PRINT(("m_tmpAmount==%lf ", m_tmpAmount));
-
 		orgMoneySum = double2int(deptInfo->m_spdj * 1000.0 * m_tmpAmount * SUM_EXTENSION);//原始总金额
-		DBG_PRINT(("orgMoneySum == %lld", orgMoneySum));
 		orgMoneySum = double2int(orgMoneySum / 1000.0);
 		DBG_PRINT(("orgMoneySum == %lld", orgMoneySum));
 	}
@@ -499,7 +495,7 @@ UINT8 SaleData::Sale( CDept *deptInfo )
 	//发票剩余份额不足(若有折扣，则删除两个节点)
 	UINT32 nInvCount = CalculateInvNum();   //商品行所需发票数
 	DBG_PRINT(("nInvCount==%d", nInvCount));
-
+	
 	m_nInvCount= nInvCount;
 	DBG_PRINT(("m_nInvCount==%d", m_nInvCount));
 
@@ -847,7 +843,7 @@ UINT8 SaleData::MakeInvoiceHandle(UINT8 nIfPrn, UINT8 nId)
 				m_smallInvInfo->m_zskl =  g_globalArg->m_strZskl;
 				DBG_PRINT(("m_smallInvInfo->m_zskl= %s",m_smallInvInfo->m_zskl.c_str()));
 
-				errCodeJSK=SALE_MakeInvHand(m_smallInvInfo,g_globalArg->m_strMsg);					
+					errCodeJSK=SALE_MakeInvHand(m_smallInvInfo,g_globalArg->m_strMsg);					
 					DBG_PRINT(("m_smallInvInfo->m_kprq= %u",m_smallInvInfo->m_kprq));
 					DBG_PRINT(("m_smallInvInfo->m_kpsj= %u",m_smallInvInfo->m_kpsj));
 					if (SUCCESS != errCodeJSK)
@@ -988,6 +984,7 @@ UINT8 SaleData::MakeInvoiceHandle(UINT8 nIfPrn, UINT8 nId)
 			//填充发票打印结构体，打印
 			//------------------------------------------------------------
 		case PRINT_INV:  		
+#if (LANGCHAO_LIB==0)
 			DBG_PRINT(("填充发票打印结构体，打印"));
 			if( nIfPrn == 1 )
 			{
@@ -1025,6 +1022,7 @@ UINT8 SaleData::MakeInvoiceHandle(UINT8 nIfPrn, UINT8 nId)
 				print_invoice_tail(m_pInvPrnData);
 				m_pInvPrnData = NULL;
 			}
+#endif
 			
 		default:
 			break;
@@ -1046,7 +1044,7 @@ UINT8 SaleData::MakeInvoiceHandle(UINT8 nIfPrn, UINT8 nId)
 		//	CleanPowerOffFlag();
 		POWOFF_ENABLE();
 	}
-
+	
 	DBG_PRINT(("m_nInvCount= %u",m_nInvCount));
 	if (m_nInvCount >1)
 	{
@@ -1299,7 +1297,7 @@ UINT8 SaleData::ComposePrnInv()
 	
 	if(RET_MANUAL_INV == m_smallInvInfo->m_kplx)
 	{
-		sprintf(value, "对应正数发票代码:%s号码:%08lu",
+		sprintf(value, "原正票代码:%s,号码:%08lu",
 			m_smallInvInfo->m_yfpdm.c_str(), m_smallInvInfo->m_yfphm);	
 		m_smallInvInfo->m_backup1 = value;	
 	}
@@ -1329,7 +1327,7 @@ UINT8 SaleData::ComposePrnInv()
         p->m_fphm =g_globalArg->m_curInvVol->m_curInvNo;
 		p->m_kplx = m_smallInvInfo->m_kplx;
 		p->m_sky =g_globalArg->m_operator->m_name;
-		p->m_sphxh = (i+1);
+			p->m_sphxh = (i+1);
 		//p->m_sphxh = i;
 		p->m_kprq = m_smallInvInfo->m_kprq; 
         p->m_kpsj = m_smallInvInfo->m_kpsj;
@@ -2353,16 +2351,16 @@ UINT8 SaleData::GoodsReduct(double money)
 		DBG_PRINT((" g_globalArg->m_curInvVol->m_remain = %u !", g_globalArg->m_curInvVol->m_remain));
 	}
 	if ((nInvCount>1)&&((m_singleInvInfo->m_kplx==RETURN_INV)||(m_singleInvInfo->m_kplx==RET_MANUAL_INV))) 
-	{
-		nIfReturn = 1;
+	 {
+	 		nIfReturn = 1;
 			ret = RETURN_GOODS_EXCEED;
-	}
+	 }
 // 	if ((nInvCount>1)) //为保证上传，不让拆张
-	// 	{
-	// 		nIfReturn = 1;
+// 	{
+// 		nIfReturn = 1;
 // 		//	ret = RETURN_GOODS_EXCEED;
 // 		ret = ONE_INV;
-	// 	}
+// 	}
 	if (1 == nIfReturn)
 	{
 		DBG_PRINT((" 取消折让行!"));
@@ -2623,14 +2621,18 @@ INT64 SaleData::CountTax(double fJe, double fSl)
 	fTmp =fSl;
     fTmp += 1.0;
 	DBG_PRINT(("fTmp= %.4f",fTmp));
+
 	
 	fTmp  = fJe / fTmp;
+
 	DBG_PRINT(("fTmp= %.4f",fTmp));
 	
 	fTmp *= fSl;
     DBG_PRINT(("fTmp= %.4f",fTmp));
-		
+	
+	
     nSe =double2int(fTmp*PRICE_EXTENSION);
+
 	DBG_PRINT(("nSe= %u",nSe));
 	
 	return nSe;

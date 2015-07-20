@@ -259,12 +259,12 @@ INT32 AmountRound(double *f)
 	INT32 dotnum;
 	UINT64 f2int = 0;
 	UINT8 littleNum = 0;
-	
+
 	memset((void *)buf, 0x00, sizeof(buf));
 	//判断绝对值是否1.0，小于1.0的double数值对小数位数没有限制
 	if (fabs(*f) < 1.0)
 		littleNum = 1;
-	
+
 	//计算小数点后有效位数
     sprintf(buf, "%.10lf", *f);
     i = strlen(buf) - 1;
@@ -272,25 +272,22 @@ INT32 AmountRound(double *f)
     {
         i--;
     }
-	
+
     dot = 0;
     while(buf[dot] != '.')
     {
         dot++;
     }
-	
+
 	//对小数位数做四舍五入处理
     dotnum = ((i - dot) > 0)?(i - dot):0;
-	DBG_PRN("info",("--------dotnum= %d--------", dotnum));
-		DBG_PRN("info",("--------littleNum= %d--------", littleNum));
 	if (dotnum > MAX_DOT_NUM && littleNum == 0)
 	{
 		(*f) += 5.0/pow(10, MAX_DOT_NUM+1);
 		sprintf(buf, "%.10lf", *f);
 		dotnum = MAX_DOT_NUM;
 	}
-	DBG_PRN("info",("--------dotnum= %d--------", dotnum));
-	//小数位数截断处理，dotnum = 0时需要把小数点去掉
+		//小数位数截断处理，dotnum = 0时需要把小数点去掉
 	if (dotnum != 0)
 	{
 		buf[dot+dotnum+1] = '\0';
@@ -299,18 +296,14 @@ INT32 AmountRound(double *f)
 	{
 		buf[dot+dotnum] = '\0';
 	}
-	
-		DBG_PRN("info",("--------buf= %s--------", buf))
+
 	//在整数部分大于1时，判断默认保留MAX_DOT_NUM位小数或更少情况下，
 	//数量是否超过最大值
 	*f = atof(buf);	
-	DBG_PRN("info",("--------*f= %f--------", *f));
 	f2int = (UINT64)((*f)*(pow(10, dotnum)));
-	DBG_PRN("info",("--------f2int= %lld--------", f2int));
-	DBG_PRN("info",("--------dotnum= %d--------", dotnum));
 	if (dotnum <= MAX_DOT_NUM && f2int > MAX_AMOUNT_VALUE)
 		return -1;
-	
+
 	//如果浮点数小于1，且无法存储，试着截断小数位数来进一步处理
 	while(littleNum && f2int > MAX_AMOUNT_VALUE)
 	{
@@ -319,12 +312,12 @@ INT32 AmountRound(double *f)
 		f2int = (UINT64)((*f)*(pow(10, dotnum)));
 		f2int += 5;
 		f2int /= 10;
-		
+
 		if (f2int > MAX_AMOUNT_VALUE)
 			buf[dot+dotnum] = '\0';
 		dotnum--;
 	} 
-	
+
 	return dotnum;
 }
 
@@ -379,7 +372,7 @@ INT64 double2int(double input)
 	INT64 tmp = tmpNum;
 	if (tmp < 0)
 	{
-		tmp = 0 - tmp;
+		tmp  =0-tmp;
 	}
 	
 	if ((tmp % 10) >= 5)

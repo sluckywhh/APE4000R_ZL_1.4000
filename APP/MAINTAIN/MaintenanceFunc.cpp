@@ -439,37 +439,6 @@ UINT8 USBEvent(UINT8 IfForward)
 	return SUCCESS;
 }
 
-#if (POS_TYPE == POS_APE5020R)
-UINT8 USBEvent2(UINT8 IfForward)
-{
-	LCDClearDisplay();//清屏
-	CaProgressBar proBar("");
-	if (USBTest2()==SUCCESS)
-	{
-		DBG_PRINT(("USB self test success"));
-		proBar.SetText("USB状态：正常");		
-		PrintStr("USB状态：正常");
-	}
-	else
-	{
-		DBG_PRINT(("USB self test fail"));
-		proBar.SetText("USB状态：异常");	
-		PrintStr("USB状态：异常");
-	}
-	proBar.ReFresh();
-	
-	if (IfForward == 1)
-	{
-		ForwardNLine(FORWARD_LINE_NUM);
-	}
-	
-#ifndef WIN32
-	usleep(600000);
-#endif
-	
-	return SUCCESS;
-}
-#endif
 //IC Card
 // UINT8 ICCardEvent(UINT8 IfForward)
 // {
@@ -603,12 +572,11 @@ UINT8 ContinuousTestEvent(void)
 	// 串口0自环检测
 //	DBG_PRINT(("------------COM0 check------------"));
 //	COM0Event(IfForward);
-
-#if (POS_TYPE != POS_APE5020R)	
+	
 	// 串口2自环检测
 	DBG_PRINT(("------------COM3 check------------"));
 	COM2Event(IfForward);
-#endif	
+	
 	// 钱箱检测
 	DBG_PRINT(("------------Money Box check------------"));
 	BoxEvent(IfForward);

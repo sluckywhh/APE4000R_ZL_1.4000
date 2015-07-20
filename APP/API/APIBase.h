@@ -21,7 +21,7 @@
 //业务流程调用函数接口方式
 #define SKJ_MODE	1		//收款机直连调用接口
 #define ZHQ_MODE	2		//转换器方式调用接口
-#define TYPE_MODE	ZHQ_MODE
+#define TYPE_MODE	SKJ_MODE
 
 
 #include "CNetPara.h"
@@ -129,7 +129,7 @@ public:
 	@return  1 SUCCESS； 0  FAILURE
 	*/
 	virtual INT32 NetParaManage_API(CNetPara *pNetPara, string &strErr)=0;
-	
+
 	/*!
 	@brief 金税盘发票查询（发票段信息查询）
 	@param[in] 
@@ -272,7 +272,7 @@ public:
 	@return  1 SUCCESS； 0  FAILURE
 	*/
 	virtual INT32 UpdateTaxProc_API(CYWXML_GY &ywxml_gy, string &strErr)=0;
-
+	
 	/*!
 	@brief  发票补录
 	@param[in] ywxml_gy	公共参数

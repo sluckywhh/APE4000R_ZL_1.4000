@@ -201,7 +201,7 @@ void CInvDownloadNOWin::OnButton1(int iEvent, unsigned char * pEventData, int iD
 	ret = INVM_InvDetailNOQuery(m_code, m_invStartNo);
 	if (ret != SUCCESS)
 	{
-	return;
+		return;
 	}
 //	ChangeWin(INV_DOWNLOAD_MENU);	 //返回发票管理界面		
 	
