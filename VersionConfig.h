@@ -19,8 +19,9 @@
 #define     POS_APE4000R	2
 #define 	POS_APE4020R	3
 #define 	POS_APE5020R	4
+#define 	POS_APE4000RG  5
 
-#define 	POS_TYPE	POS_APE4000R     //款机类型
+#define 	POS_TYPE	POS_APE4000R    //款机类型
 
 //////////////////////////////////////////////////////////////////////////
 //  款机设置
@@ -62,7 +63,7 @@
 //////////////////////////////////////////////////////////////////////////
 #define	KEYPAD_TYPE				1	/**< 键盘硬件版本，1: 新版键盘（shift与部类5对调，T9输入法键位调整），0: 老版键盘 */
 
-#if (POS_TYPE !=POS_APE4000R)		//非4000R机型KEYPAD_TYPE必须为1 不可更改
+#if ((POS_TYPE !=POS_APE4000R)&&(POS_TYPE !=POS_APE4000RG))		//非4000R机型KEYPAD_TYPE必须为1 不可更改
 #undef KEYPAD_TYPE
 #define	KEYPAD_TYPE				1
 #endif
